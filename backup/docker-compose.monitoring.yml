@@ -14,17 +14,21 @@ services:
     image: prom/pushgateway:latest
     container_name: restic-pushgateway
     restart: unless-stopped
+    command:
+      - "--persistence.file=/data/metrics"
+      - "--persistence.interval=5m"
     deploy:
       resources:
         limits:
           cpus: '0.10'
           memory: 64M
-    read_only: true
     cap_drop:
       - ALL
     networks:
       default: {}
       monitoring: {}
+    volumes:
+      - ./pushgateway-data:/data
     labels:
       prometheus.io/scrape: "true"
       prometheus.io/port: "9091"
