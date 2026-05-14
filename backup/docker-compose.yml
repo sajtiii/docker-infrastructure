@@ -14,6 +14,8 @@ services:
     read_only: true
     cap_drop:
       - ALL
+    cap_add:
+      - SETGID
     hostname: ${HOSTNAME}
     environment:
       TZ: ${TZ:-UTC}
