@@ -42,9 +42,9 @@ services:
       retries: 3
     cap_drop:
       - ALL
-    # Lets node-exporter stat root-only paths (docker volume dirs, restricted ZFS datasets) so
-    # node_filesystem_device_error{device_error="permission denied"} stops firing. Read-only;
-    # mounts are :ro so this can't be used to write anything.
+    # Gives node-exporter read access to root-only paths (docker volumes,
+    # ZFS datasets) so HostFilesystemDeviceError stops firing. Mounts are
+    # :ro so DAC_READ_SEARCH cannot be used to write anything.
     cap_add:
       - DAC_READ_SEARCH
     networks:
