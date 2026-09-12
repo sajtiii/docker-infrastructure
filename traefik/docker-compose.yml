@@ -61,6 +61,7 @@ services:
       - "--certificatesresolvers.le.acme.storage=/certs/acme.json"
       - "--entrypoints.https.http.tls.certResolver=le"
       - "--certificatesresolvers.le.acme.dnschallenge.provider=cloudflare"
+      - "--certificatesresolvers.le.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53"
       # Metrics
       - "--metrics.prometheus=true"
       - "--metrics.prometheus.addEntryPointsLabels=true"
