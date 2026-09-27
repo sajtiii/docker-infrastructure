@@ -65,7 +65,11 @@ if [ "$WATCHTOWER_ENABLED" = "true" ]; then
 fi
 compose_handle watchtower $WATCHTOWER_ENABLED
 
-if [ "$TRAEFIK_ENABLED" = "true" ]; then
+if [ "$TRAEFIK_ENABLED" = "true" ]; then  
+  CLOUDFLARE_IPS_V4=$(curl -fsS --retry 3 https://www.cloudflare.com/ips-v4)
+  CLOUDFLARE_IPS_V6=$(curl -fsS --retry 3 https://www.cloudflare.com/ips-v6)
+  export CLOUDFLARE_IPS=$(printf '%s\n%s\n' "$CLOUDFLARE_IPS_V4" "$CLOUDFLARE_IPS_V6" | grep -E '^[0-9a-fA-F.:]+/[0-9]+$' | paste -sd, -)
+
   require_env LETSENCRYPT_EMAIL
   require_env CLOUDFLARE_API_TOKEN
 fi

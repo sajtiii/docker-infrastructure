@@ -45,10 +45,13 @@ services:
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       # - "--accesslog=true"
-      # - "--accesslog.filepath=/access.log"
       # Entrypoints
       - "--entryPoints.http.address=:80"
+      - "--entryPoints.http.forwardedHeaders.trustedIPs=${CLOUDFLARE_IPS}"
       - "--entryPoints.https.address=:443"
+      - "--entrypoints.https.http.tls.certResolver=le"
+      - "--entryPoints.https.http3=true"
+      - "--entryPoints.https.forwardedHeaders.trustedIPs=${CLOUDFLARE_IPS}"
       - "--entryPoints.traefik.address=:8080"
       - "--entrypoints.metrics.address=:9200"
       # API & Ping
@@ -59,7 +62,6 @@ services:
       # SSL
       - "--certificatesresolvers.le.acme.email=${LETSENCRYPT_EMAIL}"
       - "--certificatesresolvers.le.acme.storage=/certs/acme.json"
-      - "--entrypoints.https.http.tls.certResolver=le"
       - "--certificatesresolvers.le.acme.dnschallenge.provider=cloudflare"
       - "--certificatesresolvers.le.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53"
       # Metrics
@@ -83,3 +85,5 @@ services:
       TRAEFIK_LOG_FORMAT: "json"
     labels:
       com.centurylinklabs.watchtower.enable: "true"
+      traefik.http.middlewares.cloudflare-only.ipallowlist.sourcerange: "${CLOUDFLARE_IPS}"
+
