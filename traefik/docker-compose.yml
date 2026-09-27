@@ -85,5 +85,6 @@ services:
       TRAEFIK_LOG_FORMAT: "json"
     labels:
       com.centurylinklabs.watchtower.enable: "true"
-      traefik.http.middlewares.cloudflare-only.ipallowlist.sourcerange: "${CLOUDFLARE_IPS}"
+      traefik.http.middlewares.cloudflare-only.ipallowlist.sourcerange: >-
+        ${CLOUDFLARE_IPS}
 

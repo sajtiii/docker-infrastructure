@@ -31,13 +31,12 @@ compose_handle() {
 
 : "${TZ:=UTC}"
 : "${DATA_DIR:=/srv}"
-: "${AUTOHEAL_ENABLED:=true}"
 : "${WATCHTOWER_ENABLED:=true}"
 
 export TZ DATA_DIR
 export HOSTNAME=$(hostname)
 
-compose_handle autoheal $AUTOHEAL_ENABLED
+compose_handle autoheal false
 
 compose_handle ofelia $OFELIA_ENABLED
 
