@@ -17,6 +17,12 @@ services:
     command:
       - "--persistence.file=/data/metrics"
       - "--persistence.interval=5m"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:9091/-/healthy"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
     deploy:
       resources:
         limits:
