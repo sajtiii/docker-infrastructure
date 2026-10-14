@@ -15,6 +15,8 @@ services:
     command:
       - --docker_only=true
       - --store_container_labels=false
+      - --disable_metrics=advtcp,cpu_topology,cpuset,disk,hugetlb,memory_numa,process,referenced_memory,resctrl,sched,tcp,udp
+    memswap_limit: 512M
     deploy:
       replicas: 1
       resources:
